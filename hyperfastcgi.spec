@@ -8,7 +8,7 @@ Summary:        Mono WebServer HyperFastCgi
 Source:         %{name}-%{version}-%{release}.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
-BuildRequires:  mono-devel
+#BuildRequires:  mono-devel
 
 # To build the tar, you can use : 
 # git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.3-1/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.3-1.tar
