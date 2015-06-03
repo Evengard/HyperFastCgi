@@ -25,7 +25,7 @@ xbuild /tv:4.0 /p:Configuration=Release /target:rebuild /p:SignAssembly=true /p:
 gacutil -i src/HyperFastCgi/bin/Release/HyperFastCgi.exe -package 4.0 -gacdir .%{_prefix}
 
 %install
-mv .%{_prefix} %{buildroot}
+cp .%{_prefix} %{buildroot}
 mkdir -p %{buildroot}%{_bindir}
 echo "#!/bin/sh" > %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
 echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/4.0/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
