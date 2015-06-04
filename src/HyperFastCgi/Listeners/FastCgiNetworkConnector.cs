@@ -82,8 +82,6 @@ namespace HyperFastCgi.Listeners
 		private int sendProcessing = 0;
 		//all data from front-end were received. No need to receive more
 		bool stopReceive;
-		//front-end tells that all data have been sent and asks for shutdown socket one way
-		bool readShutdown;
 		bool keepAlive = true;
 		bool useThreadPool = true;
 		static int threadName = 0;
@@ -196,7 +194,6 @@ namespace HyperFastCgi.Listeners
 				if (bytesRead <= 0) {
 
 					//Front-end disconnected
-					readShutdown=true;
 					return;
 				}
 
