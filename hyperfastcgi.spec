@@ -2,7 +2,7 @@ Name:           mono-webserver-hyperfastcgi
 Url:            https://github.com/xplicit/HyperFastCgi
 License:        X11/MIT
 Group:          Productivity/Networking/Web/Servers
-Version:        0.3
+Version:        0.4
 Release:        1
 Summary:        Mono WebServer HyperFastCgi
 Source:         %{name}-%{version}-%{release}.tar
@@ -11,7 +11,7 @@ BuildArch:      noarch
 #BuildRequires:  mono-devel
 
 # To build the tar, you can use : 
-# git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.3-1/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.3-1.tar
+# git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.4-1/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.4-1.tar
 
 %description
 Performant nginx to mono fastcgi server
@@ -29,7 +29,7 @@ rm -rf %{buildroot}/*
 mv .%{_prefix} %{buildroot}%{_prefix}
 mkdir -p %{buildroot}%{_bindir}
 echo "#!/bin/sh" > %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
-echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/4.0/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
+echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/gac/HyperFastCgi/0.4.4.0__0738eb9f132ed756/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
 chmod +x %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
 
 %clean
@@ -38,7 +38,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_bindir}/mono-server-hyperfastcgi4
-%{_prefix}/lib/mono/gac/HyperFastCgi/*
 %{_prefix}/lib/mono/4.0/HyperFastCgi.exe
+%{_prefix}/lib/mono/gac/HyperFastCgi/*
 
 %changelog
