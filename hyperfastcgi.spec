@@ -28,16 +28,16 @@ gacutil -i src/HyperFastCgi/bin/Release/HyperFastCgi.exe -package 4.0 -gacdir .%
 rm -rf %{buildroot}/*
 mv .%{_prefix} %{buildroot}%{_prefix}
 mkdir -p %{buildroot}%{_bindir}
-echo "#!/bin/sh" > %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
-echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/gac/HyperFastCgi/0.4.4.0__0738eb9f132ed756/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
-chmod +x %{buildroot}%{_bindir}/mono-server-hyperfastcgi4
+echo "#!/bin/sh" > %{buildroot}%{_bindir}/hyperfastcgi4
+echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/gac/HyperFastCgi/0.4.4.0__0738eb9f132ed756/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/hyperfastcgi4
+chmod +x %{buildroot}%{_bindir}/hyperfastcgi4
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%{_bindir}/mono-server-hyperfastcgi4
+%{_bindir}/hyperfastcgi4
 %{_prefix}/lib/mono/4.0/HyperFastCgi.exe
 %{_prefix}/lib/mono/gac/HyperFastCgi/*
 
