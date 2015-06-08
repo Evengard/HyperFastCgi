@@ -20,6 +20,7 @@ Performant nginx to mono fastcgi server
 
 %prep
 %setup -q -n %{name}-%{version}-%{release}
+./autogen.sh --prefix=/usr
 
 %build
 make
