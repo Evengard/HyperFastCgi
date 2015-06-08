@@ -38,7 +38,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_bindir}/hyperfastcgi4
-%{_prefix}/lib/mono/4.0/HyperFastCgi.exe
+%{_prefix}/lib/mono/4.5/HyperFastCgi.exe
 %{_prefix}/lib/mono/gac/HyperFastCgi/*
 %{_prefix}/lib/hyperfastcgi/4.0/HyperFastCgi.exe
 %{_prefix}/lib/libhfc-native.*
