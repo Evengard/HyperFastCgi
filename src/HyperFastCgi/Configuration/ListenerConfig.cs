@@ -19,8 +19,6 @@ namespace HyperFastCgi.Configuration
 		[XmlElement("port")]
 		public int Port { get; set;}
 
-		[XmlElement("permission")]
-		public int Permission { get; set; }
 	}
 }
 
