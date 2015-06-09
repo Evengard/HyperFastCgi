@@ -30,7 +30,7 @@ namespace HyperFastCgi.Listeners
 			Logger.Write (LogLevel.Debug,"Listening on port: {0}", config.Port);
 			Logger.Write (LogLevel.Debug,"Listening on address: {0}", config.Address);
 
-			int retval = NativeListener.Listen ((ushort)config.Family, config.Address, (ushort)config.Port);
+			int retval = NativeListener.Listen((ushort)config.Family, config.Address, (ushort)config.Port, (ushort)config.Permission);
 			//retval == 0 when no error occured
 			if (retval == 0) {
 				ThreadPool.QueueUserWorkItem (_ => NativeListener.ProcessLoop ());
@@ -59,7 +59,7 @@ namespace HyperFastCgi.Listeners
 		#endregion
 
 		[DllImport("libhfc-native", EntryPoint="Listen")]
-		private extern static int Listen(ushort family, string addr, ushort port);
+		private extern static int Listen(ushort family, string addr, ushort port, ushort permission);
 
 		[DllImport("libhfc-native", EntryPoint="Shutdown")]
 		private extern static void InternalShutdown();
