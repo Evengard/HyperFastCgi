@@ -490,15 +490,15 @@ int Listen(unsigned short int address_family, const char *addr, guint16 listen_p
 		ERRNO_OUT("Error enabling socket address reuse on listening socket");
 		return -1;
 	}
+	if(bind(listenfd, (struct sockaddr *)&listen_addr, listen_addr_len)) {
+		ERRNO_OUT("Error binding listening socket");
+		return -1;
+	}
 	if(family == AF_UNIX && 0 < permission) {
 		if(chmod(addr, (mode_t)permission)) {
 			ERRNO_OUT("Error set permissions for socket");
 			return -1;
 		}
-	}
-	if(bind(listenfd, (struct sockaddr *)&listen_addr, listen_addr_len)) {
-		ERRNO_OUT("Error binding listening socket");
-		return -1;
 	}
 	if(listen(listenfd, 8)) {
 		ERRNO_OUT("Error listening to listening socket");
