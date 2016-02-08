@@ -3,7 +3,7 @@ Url:            https://github.com/xplicit/HyperFastCgi
 License:        X11/MIT
 Group:          Productivity/Networking/Web/Servers
 Version:        0.4
-Release:        1
+Release:        2
 Summary:        Mono WebServer HyperFastCgi
 Source:         %{name}-%{version}-%{release}.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -11,7 +11,7 @@ BuildArch:      noarch
 #BuildRequires:  mono-devel
 
 # To build the tar, you can use : 
-# git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.4-1/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.4-1.tar
+# git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.4-2/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.4-2.tar
 
 %global _binaries_in_noarch_packages_terminate_build 0
 
