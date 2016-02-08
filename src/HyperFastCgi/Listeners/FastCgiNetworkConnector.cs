@@ -83,22 +83,13 @@ namespace HyperFastCgi.Listeners
 		//all data from front-end were received. No need to receive more
 		bool stopReceive;
 		bool keepAlive = true;
-		bool useThreadPool = true;
 		static int threadName = 0;
 		private static int nConnect = 0;
-		#pragma warning disable 414
 		uint cn = 0;
-		#pragma warning restore
 		bool debugEnabled = false; 
 
 		static Dictionary <uint,FastCgiNetworkConnector> connectors = new Dictionary<uint, FastCgiNetworkConnector> (100);
 		static object connectorsLock = new object ();
-
-
-		public bool UseThreadPool {
-			get { return useThreadPool; }
-			set { useThreadPool = value; }
-		}
 
 		public bool KeepAlive {
 			get { return keepAlive; }
