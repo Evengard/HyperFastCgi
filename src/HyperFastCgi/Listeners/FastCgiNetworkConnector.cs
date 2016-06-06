@@ -37,6 +37,7 @@ using HyperFastCgi.Helpers.FastCgiProtocol;
 using HyperFastCgi.Helpers.Logging;
 using HyperFastCgi.Transports;
 using HyperFastCgi.Interfaces;
+using System.Linq;
 
 namespace HyperFastCgi.Listeners
 {
@@ -417,6 +418,9 @@ namespace HyperFastCgi.Listeners
 
 		public void Disconnect ()
 		{
+			if (isDisconnected)
+				return;
+
 			isDisconnected = true;
 
 			//if (client.Connected)
@@ -427,6 +431,22 @@ namespace HyperFastCgi.Listeners
 
 			}
 			OnDisconnected ();
+		}
+
+		public static void ShutdownAll ()
+		{
+			List<uint> keys;
+
+			lock (connectorsLock) {
+				keys = connectors.Keys.ToList ();
+			}
+
+			foreach (uint key in keys) {
+				FastCgiNetworkConnector connector;
+				if (connectors.TryGetValue (key, out connector)) {
+					connector.Disconnect ();
+				}
+			}
 		}
 
 		#region Events
