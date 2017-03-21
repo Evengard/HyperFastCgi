@@ -1,46 +1,61 @@
-Name:           mono-webserver-hyperfastcgi
+Name:           hyperfastcgi
 Url:            https://github.com/xplicit/HyperFastCgi
 License:        X11/MIT
 Group:          Productivity/Networking/Web/Servers
 Version:        0.4
-Release:        3
+Release:        4
 Summary:        Mono WebServer HyperFastCgi
-Source:         %{name}-%{version}-%{release}.tar
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-BuildArch:      noarch
-#BuildRequires:  mono-devel
+Source:         https://github.com/xplicit/HyperFastCgi/archive/master.zip
+Requires:       mono, glib2, libevent, libmonosgen-2_0-1, systemd
+BuildRequires:  mono-devel, glib2-devel, libevent-devel, libmonosgen-2_0-devel, autoconf, automake, libtool
 
-# To build the tar, you can use : 
-# git archive --format=tar --prefix=mono-webserver-hyperfastcgi-0.4-3/ master > ~/rpmbuild/SOURCES/mono-webserver-hyperfastcgi-0.4-3.tar
-
-%global _binaries_in_noarch_packages_terminate_build 0
+# Build from spec file as root user
+# yum install rpm-build redhat-rpm-config rpmdevtools yum-utils
+# mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+# curl -o ~/rpmbuild/SPECS/hyperfastcgi.spec https://raw.githubusercontent.com/xplicit/HyperFastCgi/master/hyperfastcgi.spec
+#
+# spectool -g -R  ~/rpmbuild/SPECS/hyperfastcgi.spec
+# yum-builddep ~/rpmbuild/SPECS/hyperfastcgi.spec
+# rpmbuild -ba  ~/rpmbuild/SPECS/hyperfastcgi.spec
 
 %description
 Performant nginx to mono fastcgi server
 
+%define debug_package %{nil}
+
 %prep
-%setup -q -n %{name}-%{version}-%{release}
-./autogen.sh --prefix=/usr
+%setup -q -n HyperFastCgi-master
 
 %build
+
+./autogen.sh --prefix=%{_prefix}
 make
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-echo "#!/bin/sh" > %{buildroot}%{_bindir}/hyperfastcgi4
-echo 'exec %{_bindir}/mono $MONO_OPTIONS "%{_prefix}/lib/mono/gac/HyperFastCgi/0.4.4.0__0738eb9f132ed756/HyperFastCgi.exe" "$@"' >> %{buildroot}%{_bindir}/hyperfastcgi4
-chmod +x %{buildroot}%{_bindir}/hyperfastcgi4
-make install DESTDIR=$DESTDIR
+make DESTDIR=%{buildroot} install
+mkdir -p %{buildroot}%{_datadir}/%{name}/samples
+cp samples/*.config %{buildroot}%{_datadir}/%{name}/samples
+mkdir -p %{buildroot}%{_sysconfdir}/hyperfastcgi
+cp samples/server.config %{buildroot}%{_sysconfdir}/%{name}/hfc.config
+mkdir -p %{buildroot}%{_unitdir}
+cp samples/ubuntu-startup/systemd/hyperfastcgi.service %{buildroot}%{_unitdir}
+
+%post
+/sbin/ldconfig
+/usr/bin/gacutil -package 4.5  -i %{_prefix}/lib/%{name}/4.0/HyperFastCgi.exe
+install -m 777 -d /var/log/%{name}
+
+%postun
+/usr/bin/gacutil -package 4.5  -u %{_prefix}/lib/%{name}/4.0/HyperFastCgi.exe
+/sbin/ldconfig
 
 %clean
 rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
-%{_bindir}/hyperfastcgi4
-%{_prefix}/lib/mono/4.5/HyperFastCgi.exe
-%{_prefix}/lib/mono/gac/HyperFastCgi/*
-%{_prefix}/lib/hyperfastcgi/4.0/HyperFastCgi.exe
-%{_prefix}/lib/libhfc-native.*
+%{_bindir}/*
+%{_prefix}/lib/*
+%config(noreplace) %{_sysconfdir}/*
+%{_datadir}/*
 
 %changelog
