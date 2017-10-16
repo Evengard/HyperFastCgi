@@ -117,7 +117,7 @@ namespace HyperFastCgi.AppHosts.AspNet
 		protected virtual Encoding Encoding {
 			get {
 				if (encoding == null)
-					encoding = Encoding.GetEncoding (28591);
+					encoding = Encoding.GetEncoding (65001);
 
 				return encoding;
 			}
