@@ -10,6 +10,8 @@
     <RootNamespace>HyperFastCgi</RootNamespace>
     <AssemblyName>HyperFastCgi</AssemblyName>
     <ReleaseVersion>0.4</ReleaseVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../mono.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

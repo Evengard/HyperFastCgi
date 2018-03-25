@@ -151,6 +151,17 @@ namespace HyperFastCgi.Configuration
 					if (transports != null && transports.Count > 0) {
 						configInfo.AppHostTransport = transports [0];
 					}
+					var listenerConfig = configInfo.Config as ListenerConfig;
+					if (listenerConfig != null) {
+						var address = listenerConfig.Address;
+						var perm = listenerConfig.Permission.ToString();
+						if (!string.IsNullOrEmpty(address) && address.StartsWith("//") && address.Contains("@")) {
+							var arr = address.Split('@');
+							perm = arr[0].Trim('/');
+							listenerConfig.Address = arr[1];
+						}
+						listenerConfig.Permission = Convert.ToInt32(perm, 8);
+					}
 				}
 
 				configs.Add (configInfo);
